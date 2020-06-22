@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_nav"
+    app:startDestination="@id/currentForecastFragment">
+
+    <fragment
+        android:id="@+id/locationEntryFragment"
+        android:name="com.assignment1.helloworld.location.LocationEntryFragment"
+        android:label="@string/app_name"
+        tools:layout="@layout/fragment_location_entry" />
+    <fragment
+        android:id="@+id/currentForecastFragment"
+        android:name="com.assignment1.helloworld.forecast.CurrentForecastFragment"
+        android:label="@string/app_name"
+        tools:layout="@layout/fragment_current_forecast" >
+        <action
+            android:id="@+id/action_currentForecastFragment_to_locationEntryFragment2"
+            app:destination="@id/locationEntryFragment" />
+        <action
+            android:id="@+id/action_currentForecastFragment_to_forecastDetailsFragment2"
+            app:destination="@id/forecastDetailsFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/forecastDetailsFragment2"
+        android:name="com.assignment1.helloworld.details.ForecastDetailsFragment"
+        android:label="@string/app_name" >
+        <argument
+            android:name="temp"
+            app:argType="float" />
+        <argument
+            android:name="description"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/weeklyForecastFragment"
+        android:name="com.assignment1.helloworld.forecast.WeeklyForecastFragment"
+        android:label="WeeklyForecastFragment"
+        tools:layout="@layout/fragment_weekly_forecast"
+        >
+        <action
+            android:id="@+id/action_weeklyForecastFragment_to_forecastDetailsFragment2"
+            app:destination="@id/forecastDetailsFragment2" />
+        <action
+            android:id="@+id/action_weeklyForecastFragment_to_locationEntryFragment"
+            app:destination="@id/locationEntryFragment" />
+    </fragment>
+</navigation>

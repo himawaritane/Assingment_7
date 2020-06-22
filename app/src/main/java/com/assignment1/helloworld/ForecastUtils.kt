@@ -18,11 +18,11 @@ fun showTempDisplaySettingDialog(context: Context, tempDisplaySettingManager: Te
     val dialogBuilder = AlertDialog.Builder(context)
         .setTitle("choose Display Units")
         .setMessage("chosse which tempetature unit to use for temperature display")
-        .setPositiveButton("F"){ _,_ ->
+        .setPositiveButton("°F"){ _,_ ->
             tempDisplaySettingManager.updateSetting(TempDisplaySetting.Fahrenheit)
             //Toast.makeText(this,"show using F", Toast.LENGTH_SHORT).show()
         }
-        .setNeutralButton("C") { _, _ ->
+        .setNeutralButton("°C") { _, _ ->
             tempDisplaySettingManager.updateSetting(TempDisplaySetting.Celsius)
             //Toast.makeText(this, "show using C", Toast.LENGTH_SHORT).show()
         }

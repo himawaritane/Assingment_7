@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <item name="something" type="id" />
+    <item name="dailyForecastList" type="id" />
+    <item name="locationName" type="id" />
 </resources>

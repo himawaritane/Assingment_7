@@ -4,5 +4,5 @@
     <color name="colorPrimaryDark">#D82316</color>
     <color name="colorAccent">#03DAC5</color>
 
-    <color name="forecast_item_background">#FBFBFB</color>
+    <color name="forecast_item_background">#FBFAF6</color>
 </resources>

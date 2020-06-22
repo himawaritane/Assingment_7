@@ -9,47 +9,39 @@ import android.view.MenuItem
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.appcompat.widget.Toolbar
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.widget.ToolbarWidgetWrapper
 import androidx.lifecycle.Observer
+import androidx.navigation.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.assignment1.helloworld.details.ForecastDetailsActivity
+import com.assignment1.helloworld.details.ForecastDetailsFragment
+import com.assignment1.helloworld.forecast.CurrentForecastFragment
+import com.assignment1.helloworld.forecast.CurrentForecastFragmentDirections
+import com.assignment1.helloworld.location.LocationEntryFragment
+//import com.assignment1.helloworld.location.LocationEntryFragmentDirections
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
 class MainActivity : AppCompatActivity() {
 
-    private val forecastRepository = ForecastRepository()
     private lateinit var tempDisplaySettingManager: TempDisplaySettingManager
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         tempDisplaySettingManager = TempDisplaySettingManager(this)
 
-        val zipcodeEditText: EditText = findViewById(R.id.zipcodeEditText)
-        val enterButton: Button = findViewById(R.id.enterButton)
-
-        enterButton.setOnClickListener {
-            val zipcode: String = zipcodeEditText.text.toString()
-            if(zipcode.length != 5) {
-                Toast.makeText(this, R.string.zipcode_entry_error, Toast.LENGTH_SHORT).show()
-            }else {
-                forecastRepository.loadForecast(zipcode)
-            }
-        }
-
-        val dailyForecastList: RecyclerView = findViewById(R.id.forecastList)
-        dailyForecastList.layoutManager = LinearLayoutManager(this)
-        val dailyForecastAdapter = DailyForecastAdapter(tempDisplaySettingManager){ forecast ->
-            showForecastDetails(forecast)
-        }
-        dailyForecastList.adapter = dailyForecastAdapter
-        val weeklyForecastObserver = Observer<List<DailyForecast>> { forecastItems->
-            //update our List adapter
-           dailyForecastAdapter.submitList(forecastItems)
-        }
-        forecastRepository.weeklyForecast.observe(this, weeklyForecastObserver )
+        val navController = findNavController(R.id.nav_host_fragment)
+        val appBarConfiguration = AppBarConfiguration(navController.graph)
+        findViewById<Toolbar>(R.id.toolbar).setTitle(R.string.app_name)
+        findViewById<BottomNavigationView>(R.id.bottomNavigationView).setupWithNavController(navController)
     }
+
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater: MenuInflater = menuInflater
@@ -70,13 +62,4 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
-
-
-    private fun showForecastDetails(forecast: DailyForecast) {
-        val forecastDetailsIntent = Intent(this, ForecastDetailsActivity::class.java)
-        forecastDetailsIntent.putExtra("key_temp", forecast.temp)
-        forecastDetailsIntent.putExtra("key_description", forecast.description)
-        startActivity(forecastDetailsIntent)
-    }
 }
